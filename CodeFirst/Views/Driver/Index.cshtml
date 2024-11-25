@@ -1,0 +1,91 @@
+﻿@model IEnumerable<CodeFirst.Models.Driver>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Driver Details</h2>
+@*<a href="@Url.Action("Create","Driver")" id="btnCreate" class="btn btn-primary btn-sm">Add New Driver</a>*@
+<button type="button" class="btn btn-primary" onclick="openAddStudentModal()">
+    Add New Student
+</button>
+@foreach (var driver in Model)
+{
+    <div>
+        <img src="@driver.Picture" width="30" style="border-radius:40px" ; />
+        <label class="me-2"><b>Driver:</b> @Html.DisplayFor(s => driver.DriverName) </label>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Vehicle ID</th>
+                    <th>Vehicle Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in driver.Trip)
+                {
+
+                    <tr>
+                        <td>@Html.DisplayFor(s => item.Vehicle.VehicleID)</td>
+                        <td>@Html.DisplayFor(s => item.Vehicle.VehicleName)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        @*<a href="@Url.Action("Edit","Driver", new {id= driver.DriverID} )" id="btnEdit" class="btn btn-outline-success btn-sm">Edit</a>*@
+        <button type="button" class="btn btn-outline-success" onclick="openEditStudentModal(@driver.DriverID)">Edit</button> |
+        <a href="@Url.Action("Delete","Driver", new {id= driver.DriverID} )" id="btnDelete" class="btn btn-outline-danger btn-sm">Delete</a>
+    </div>
+}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Driver</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Driver</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBodyContent1">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function openAddStudentModal() {
+        $.ajax({
+            url: '@Url.Action("Create", "Driver")',
+            type: 'GET',
+            success: function (result) {
+                $('#modalBodyContent').html(result);
+                $('#exampleModal').modal('show'); // Open modal after loading content
+            },    
+        });
+    }
+</script>
+<script>
+    function openEditStudentModal(DriverID) {
+        $.ajax({
+            url: '@Url.Action("Edit", "Driver")' + '?id=' + DriverID,
+            type: 'GET',
+            success: function (result) {
+                $('#modalBodyContent1').html(result);
+                $('#exampleModal1').modal('show'); // Open modal after loading content
+            },
+        });
+    }
+</script>
+
+

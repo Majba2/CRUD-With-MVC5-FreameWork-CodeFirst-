@@ -1,0 +1,5 @@
+﻿@model CodeFirst.Models.Vehicle
+<div>
+    @Html.DropDownListFor(c => c.VehicleID, ViewBag.vehicle as SelectList, "--Select--")
+    @Html.ActionLink("Remove", "", null, new { id = "btnDelete" })
+    </div>

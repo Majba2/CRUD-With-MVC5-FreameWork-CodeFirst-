@@ -1,0 +1,59 @@
+﻿@model CodeFirst.Models.ViewModels.DriverVM
+@{
+    ViewBag.Title = "Edit";
+}
+<h2>Edit</h2>
+@using (Html.BeginForm("Edit", "Driver", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>
+        Edit Student
+    </h4>
+    @Html.HiddenFor(s => s.DriverID)
+    <div>
+        @Html.LabelFor(s => s.DriverName)
+        <div>
+            @Html.TextBoxFor(s => s.DriverName)
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(s => s.Age)
+        <div>
+            @Html.TextBoxFor(s => s.Age, new { type = "number" })
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(s => s.DateOfBirth)
+        <div>
+            @Html.TextBox("DateOfBirth", Model.DateOfBirth.ToString("yyyy-MM-dd") ?? "", new { type = "date" })
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(s => s.PictureFile)
+        <div>
+            @Html.TextBoxFor(s => s.PictureFile, new { type = "file" })
+            <img src="@Model.Picture" width="30" style="border-radius:40px;" />
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(s => s.IsAvailable)
+        <div>
+            @Html.CheckBoxFor(s => s.IsAvailable)
+        </div>
+    </div><label>Courses</label><div>
+        <input type="button" value="Add More" id="btnPlus" />
+    </div><div id="container">
+        @foreach (var item in Model.Trip)
+
+        {
+            @Html.Action("AddNewVehicle", "Driver", new { id = item.VehicleID })
+        }
+    </div>
+    <div>
+        <input type="submit" value="Update" />
+    </div>
+
+}
+<div>
+    <a href="@Url.Action("Index","Driver")">Back To List</a>
+</div>

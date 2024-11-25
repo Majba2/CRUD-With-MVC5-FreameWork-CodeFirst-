@@ -1,0 +1,55 @@
+﻿@model CodeFirst.Models.ViewModels.DriverVM
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "Driver", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.LabelFor(s => s.DriverName)
+        <div>
+            @Html.TextBoxFor(s => s.DriverName)
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(s => s.Age)
+        <div>
+            @Html.TextBoxFor(s => s.Age, new { type = "number" })
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(s => s.DateOfBirth)
+        <div>
+            @Html.TextBoxFor(s => s.DateOfBirth, new { type = "date" })
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(s => s.PictureFile)
+        <div>
+            @Html.TextBoxFor(s => s.PictureFile, new { type = "file" })
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(s => s.IsAvailable)
+        <div>
+            @Html.CheckBoxFor(s => s.IsAvailable)
+        </div>
+    </div>
+    <label>Vehicles</label>
+    <div>
+        <input type="button" value="Add More" id="btnPlus" />
+    </div>
+    <div id="container">
+        @Html.Action("AddNewVehicle", "Driver")
+    </div>
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+
+}
+<div>
+    <a href="@Url.Action("Index","Driver")"> Back To List</a>
+</div>
+
